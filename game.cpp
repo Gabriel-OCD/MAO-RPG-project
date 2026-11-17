@@ -26,7 +26,10 @@ int main()
     cout << "Where would you like to go???" << endl;
     while(endGame==true)
     {
-    game1.Menu();
+    if(game1.getEndGame()==false)
+    {return 0;}
+    else
+    {game1.Menu();}
     }
     return 0;
 }
