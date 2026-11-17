@@ -19,7 +19,7 @@ class RPG
     void ClassSelect();
 
 
-    void upgrade();
+    void upgrade(); //function to upgrade stats
     void upStat(int statIncrease){statPoints = statPoints + statIncrease;}  // increase number of stat points 
     void upStr(int strUp){Cstr = Cstr + strUp;}                             //
     void upDex(int dexUp){Cdex = Cdex + dexUp;}                             //
@@ -30,6 +30,7 @@ class RPG
     // getter functions
     string getName(){return name;}
     string getClass(){return Class;}
+    bool getEndGame(){return endGame;}
     int getLevel(){return level;}
     int getPoints(){return statPoints;}
     int getStr(){return Cstr;}
