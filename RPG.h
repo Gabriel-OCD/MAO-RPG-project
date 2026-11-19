@@ -2,14 +2,21 @@
 //Team MAO
 //28/10/2026
 #include <string>
+#include <fstream>
 using namespace std;
 
 class RPG
 {
+    public:
+        void SaveGame();
+        bool LoadGame();
+
     private:
     string name, Class;
+    string Location;
 
     int level=1, statPoints=5, Cstr=0, Cdex=0, Ccon=0, Ccast=0, Cmana=0;
+    int XP=0, Gold=0, HP=1;
     bool endGame=1;
     public:
 
@@ -17,6 +24,13 @@ class RPG
     // setter functions
     void setName(string newName){name = newName;}                           // set new character name
     void ClassSelect();
+
+    void setLocation(string placeFC){Location = placeFC;}
+    void setClass(string classFC){Class = classFC;}
+    void setLevel(int levelFC){level = levelFC;}
+    void setHP(int HPFC){HP = HPFC;}
+    void setXP(int XPFC){XP = XPFC;}
+    void setGold(int GoldFC){Gold = GoldFC;}
 
 
     void upgrade(); //function to upgrade stats
@@ -38,6 +52,13 @@ class RPG
     int getCon(){return Ccon;}
     int getCast(){return Ccast;}
     int getMana(){return Cmana;}
+    int getXP(){return XP;}
+    int getGold(){return Gold;}
+    string getLocation(){return Location;}
+    int getHP(){return HP;}
+
+    // save functions
+    void getLine();
 
     // menu functions
     void Menu();

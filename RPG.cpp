@@ -3,6 +3,9 @@
 // 28/10/2026
 #include "RPG.h"
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <limits>
 using namespace std;
 
 void RPG::Quit()
@@ -136,9 +139,12 @@ void RPG::Menu()
 {
     int c = -1;
     cout << "MENU:" << endl;
+    cout << "Continue" << endl;
+    cout << "Save Game" << endl;
+    cout << "Quit Game" << endl;
     cout << "\n";
-    cout << "1: Close menu \n2: View stats \n3: Travel \n4: Quit game " << endl;
-    while (c < 1 || c > 4)
+    cout << "1: Close menu \n2: View stats \n3: Travel \n4: Quit game \n5: Save Game" << endl;
+    while (c < 1 || c > 5)
     {
         cout << "=>";
         cin >> c;
@@ -153,6 +159,10 @@ void RPG::Menu()
         else if (c == 4)
         {
             Quit();
+        }
+        else if (c == 5)
+        {
+            SaveGame();
         }
         // restart while loop
         else
@@ -194,4 +204,68 @@ void RPG::displayStats()
             cerr << "Invalid Choice Entered. Please enter again.\n=>";
         } // if invalid choice is entered
     }
+}
+
+void RPG::SaveGame()
+{
+    ofstream saveFile("save.txt");
+
+    if (!saveFile)
+    {
+        cout << "Error: Could not save game!" << endl;
+        return;
+    }
+
+    saveFile << getName() ;
+    saveFile << '\n';
+    saveFile << getClass() << endl;
+    saveFile << getLevel() << endl;
+    saveFile << getHP() << endl;
+    saveFile << getXP() << endl;
+    saveFile << getGold() << endl;
+    saveFile << getLocation() << endl;
+
+    saveFile.close();
+
+    cout << "Game saved successfully!" << endl;
+}
+
+bool RPG::LoadGame()
+{
+    ifstream saveFile("save.txt");
+
+    if (!saveFile)
+    {
+        cout << "No save file found!" << endl;
+        return false;
+    }
+
+    string name, playerClass, location;
+    int level, hp, xp, gold;
+
+    getline(saveFile, name);
+    getline(saveFile, playerClass);
+
+    saveFile >> level >> hp >> xp >> gold;
+
+    saveFile.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(saveFile, location);
+
+    if (saveFile.fail())
+    {
+        cout << "Error: Save file is corrupted!" << endl;
+        return false;
+    }
+
+    setName(name);
+    setClass(playerClass);
+    setLevel(level);
+    setHP(hp);
+    setXP(xp);
+    setGold(gold);
+    setLocation(location);
+
+    cout << "Game loaded successfully!" << endl;
+
+    return true;
 }
